@@ -43,129 +43,27 @@ import { BrowserModule } from "@angular/platform-browser";
 import { JokeComponent } from "src/app/joke/joke.component";
 import { JokeListComponent } from "src/app/joke-list/joke-list.component";
 import { JokeFormComponent } from "src/app/joke-form/joke-form.component";
-
-// class Joke {
-//   public setup: string;
-//   public punchline: string;
-//   public hide: boolean;
-
-//   constructor(setup: string, punchline: string) {
-//     this.setup = setup;
-//     this.punchline = punchline;
-//     this.hide = true;
-//   }
-
-//   toggle() {
-//     this.hide = !this.hide;
-//   }
-// }
-
-// @Component({
-//   selector: "joke-form",
-//   template: `
-//   <div class="card card-block">
-//   <h4 class="card-title">Create Joke</h4>
-//   <div class="form-group">
-//     <input type="text"
-//            class="form-control"
-//            placeholder="Enter the setup"
-//            #setup>
-//   </div>
-//   <div class="form-group">
-//     <input type="text"
-//            class="form-control"
-//            placeholder="Enter the punchline"
-//            #punchline>
-//   </div>
-//   <button type="button"
-//           class="btn btn-primary"
-//           (click)="createJoke(setup.value, punchline.value)">Create
-//   </button>
-// </div>
-//   `,
-//   styles: [`
-//   .card {
-//   background-color: gray;
-// }
-//   `]
-//   // encapsulation: ViewEncapsulation.Emulated
-//   // encapsulation: ViewEncapsulation.Native
-//   // encapsulation: ViewEncapsulation.None
-// })
-// class JokeFormComponent {
-//   @Output() jokeCreated = new EventEmitter<Joke>();
-
-//   createJoke(setup: string, punchline: string) {
-//     this.jokeCreated.emit(new Joke(setup, punchline));
-//   }
-// }
-
-// @Component({
-//   selector: "joke",
-//   template: `
-// <div class="card card-block">
-//   <h4 class="card-title">{{data.setup}}</h4>
-//   <p class="card-text"
-//      [hidden]="data.hide">{{data.punchline}}</p>
-//   <a (click)="data.toggle()"
-//      class="btn btn-warning">Tell Me
-//   </a>
-// </div>
-// `
-// })
-// class JokeComponent {
-//   @Input("joke") data: Joke;
-// }
-
-// @Component({
-//   selector: "joke-list",
-//   template: `
-// <joke-form (jokeCreated)="addJoke($event)"></joke-form>
-// <joke *ngFor="let j of jokes" [joke]="j"></joke>
-//   `
-// })
-// class JokeListComponent {
-//   jokes: Joke[];
-
-//   constructor() {
-//     this.jokes = [
-//       new Joke(
-//         "What did the cheese say when it looked in the mirror?",
-//         "Hello-me (Halloumi)"
-//       ),
-//       new Joke(
-//         "What kind of cheese do you use to disguise a small horse?",
-//         "Mask-a-pony (Mascarpone)"
-//       ),
-//       new Joke(
-//         "A kid threw a lump of cheddar at me",
-//         "I thought ‘That’s not very mature’"
-//       )
-//     ];
-//   }
-
-//   addJoke(joke) {
-//     this.jokes.unshift(joke);
-//   }
-// }
-
-@Component({
-  selector: "app-root",
-  template: `
-<joke-list></joke-list>
-  `
-})
-class AppComponent { }
+import { AppComponent } from "src/app/app.component";
+import { CardHoverDirective } from './card-hover.directive';
+import { AsyncPipeComponent } from './async-pipe/async-pipe.component';
+import { SearchComponent } from './search/search.component';
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { SearchService } from 'src/app/search.service';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
-  imports: [BrowserModule],
+  imports: [BrowserModule, ReactiveFormsModule, FormsModule, HttpModule],
   declarations: [
     AppComponent,
     JokeComponent,
     JokeListComponent,
-    JokeFormComponent
+    JokeFormComponent,
+    CardHoverDirective,
+    AsyncPipeComponent,
+    SearchComponent
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [ SearchService]
 })
 export class AppModule { }
 

@@ -3,10 +3,10 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: "joke",
   template: `
-<div class="card card-block">
-  <h4 class="card-title">{{data.setup}}</h4>
+<div class="card card-block" appCardHover>
+  <h4 class="card-title"><ng-content select=".setup"></ng-content></h4>
   <p class="card-text"
-     [hidden]="data.hide">{{data.punchline}}</p>
+     [hidden]="data.hide"><ng-content select=".punchline"></ng-content></p>
   <a (click)="data.toggle()"
      class="btn btn-warning">Tell Me
   </a>

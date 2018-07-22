@@ -1,34 +1,46 @@
 import { Component, OnInit } from '@angular/core';
-import { Joke } from "src/app/joke/joke.component";
+import { Joke, JokeComponent } from "src/app/joke/joke.component";
+import { ViewChild } from "@angular/core";
+import { AfterViewInit } from "@angular/core";
+import { ViewChildren } from "@angular/core";
+import { QueryList, ElementRef } from "@angular/core";
+import { CardHoverDirective } from "src/app/card-hover.directive";
 
 @Component({
   selector: "joke-list",
   template: `
-<joke-form (jokeCreated)="addJoke($event)"></joke-form>
-<joke *ngFor="let j of jokes" [joke]="j"></joke>
+<h4 #header>View Jokes</h4>
+<joke *ngFor="let j of jokes" [joke]="j">
+  <span class="setup">{{ j.setup }}?</span>
+  <h1 class="punchline">{{ j.punchline }}</h1>
+</joke>
+<h4>Content Jokes</h4>
+<ng-content></ng-content>
+<h2>Asysnc</h2>
+<async-pipe></async-pipe>
   `
 })
-export class JokeListComponent {
-  jokes: Joke[];
+export class JokeListComponent implements AfterViewInit {
+
+  @ViewChild(JokeComponent) jokeViewChild: JokeComponent;
+  @ViewChildren(JokeComponent) jokeViewChildren: QueryList<JokeComponent>;
 
   constructor() {
-    this.jokes = [
-      new Joke(
-        "What did the cheese say when it looked in the mirror?",
-        "Hello-me (Halloumi)"
-      ),
-      new Joke(
-        "What kind of cheese do you use to disguise a small horse?",
-        "Mask-a-pony (Mascarpone)"
-      ),
-      new Joke(
-        "A kid threw a lump of cheddar at me",
-        "I thought ‘That’s not very mature’"
-      )
-    ];
+    console.log(`new - jokeViewChild is ${this.jokeViewChild}`);
   }
 
-  addJoke(joke) {
-    this.jokes.unshift(joke);
+  ngAfterViewInit(): void {
+    console.log(`ngAfterViewInit - jokeViewChild is ${this.jokeViewChild}`);
+    let jokes: JokeComponent[] = this.jokeViewChildren.toArray();
+    console.log(jokes);
   }
+
+  jokes: Joke[] = [
+    new Joke("What did the cheese say when it looked in the mirror", "Hello-me (Halloumi)"),
+    new Joke("What kind of cheese do you use to disguise a small horse", "Mask-a-pony (Mascarpone)")
+  ];
+
+  // addJoke(joke) {
+  //   this.jokes.unshift(joke);
+  // }
 }

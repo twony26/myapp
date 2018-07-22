@@ -1,6 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { Joke } from 'src/app/joke/joke.component';
 import { EventEmitter } from '@angular/core';
+import { ViewEncapsulation } from "@angular/core";
 
 @Component({
   selector: 'joke-form',
@@ -30,9 +31,9 @@ import { EventEmitter } from '@angular/core';
   background-color: gray;
 }
   `]
-  // encapsulation: ViewEncapsulation.Emulated
+  ,encapsulation: ViewEncapsulation.Emulated
   // encapsulation: ViewEncapsulation.Native
-  // encapsulation: ViewEncapsulation.None
+  // , encapsulation: ViewEncapsulation.None
 })
 export class JokeFormComponent {
   @Output() jokeCreated = new EventEmitter<Joke>();
